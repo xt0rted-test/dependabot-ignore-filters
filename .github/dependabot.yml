@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    groups:
+      dotnet:
+        patterns:
+          - "Microsoft.*"
+      serilog:
+        patterns:
+          - "Serilog"
+          - "Serilog.*"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
