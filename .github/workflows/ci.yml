@@ -1,0 +1,8 @@
+name: CI
+on: pull_request
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: nuget restore
