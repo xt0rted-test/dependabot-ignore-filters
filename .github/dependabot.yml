@@ -8,6 +8,8 @@ updates:
       dotnet:
         patterns:
           - "Microsoft.*"
+        exclude-patterns:
+          - "Microsoft.Extensions.Configuration.AzureAppConfiguration"
       serilog:
         patterns:
           - "Serilog"
