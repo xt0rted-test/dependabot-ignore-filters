@@ -3,6 +3,22 @@ on: pull_request
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ALLOWED_GROUPS: |
+        {
+          "nuget": [
+            "dotnet",
+          ],
+        }
+      ALLOWED_PACKAGES: |
+        {
+          "npm": [
+            "jest",
+          ],
+          "nuget": [
+            "NewtonSoft.Json",
+          ],
+        }
     steps:
       - uses: dependabot/fetch-metadata@v1
         id: dependabot-metadata
@@ -10,3 +26,11 @@ jobs:
       - run: echo "$STEPS_CONTEXT"
         env:
           STEPS_CONTEXT: ${{ toJson(steps) }}
+
+      - name: Is allowed pacakge
+        if: steps.dependabot-metadata.outputs.dependency-group == ''
+        run: echo ${{ contains(fromJson(env.ALLOWED_PACKAGES)[steps.dependabot-metadata.outputs.package-ecosystem], fromJson(steps.dependabot-metadata.outputs.updated-dependencies-json)[0].dependencyName) }}
+
+      - name: Is allowed group
+        if: steps.dependabot-metadata.outputs.dependency-group != ''
+        run: echo ${{ contains(fromJson(env.ALLOWED_GROUPS)[steps.dependabot-metadata.outputs.package-ecosystem], steps.dependabot-metadata.outputs.dependency-group) }}
