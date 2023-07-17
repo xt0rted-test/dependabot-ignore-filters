@@ -12,7 +12,7 @@ jobs:
         }
       ALLOWED_PACKAGES: |
         {
-          "npm": [
+          "npm_and_yarn": [
             "jest",
           ],
           "nuget": [
